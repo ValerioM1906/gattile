@@ -13,7 +13,12 @@ $utente = $query->get_result();
 
     
     if ($utente->num_rows>0) {
-        $r=$utente->fetch_assoc();   
+        $_SESSION['username'] = $dati['username'];
+        $r=$utente->fetch_assoc();
+           
+        $_SESSION['id'] = $r['id'];
+        $_SESSION['is_admin'] = (bool)$r['is_admin'];
+        
         if ($dati['remember']==true)
             setcookie('ricordami', $dati['username'], time()+72*3600, '/', '', false, true);
         echo json_encode([
@@ -21,8 +26,9 @@ $utente = $query->get_result();
             'message' => 'LOGGATO',
             'nome' => $r['nome'],    
             'cognome' => $r['cognome']
-        ]);}
-        
+        ]);
+                $c->close();
+        }        
 else{
     echo json_encode(['status' => 'error', 'message' => $dati['username'].' '.$dati['password']]);
     exit;

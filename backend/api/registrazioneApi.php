@@ -12,7 +12,7 @@ $query->bind_param("s", $dati['username']);
 $query->execute();  
 $result=$query->get_result();
 if($result->num_rows>0){
-    echo json_encode(['status' => 'error', 'message' => 'Username già esistente']);
+    echo json_encode(['status' => 'error', 'message' => 'Username già esistente', 'errore'=>'username']);
     exit;
 }
 $query=$c->prepare("Insert into utenti(nome, cognome, username, password, indirizzo, is_admin)
@@ -22,6 +22,18 @@ $query->bind_param('sssssi', $dati['nome'], $dati['cognome'], $dati['username'],
 $cnt=$query->execute();
 if($cnt>0){
     setcookie('ricordami', $dati['username'], time()+72*3600, '/', '', false, true);
+    $_SESSION['username'] = $dati['username'];
+    $c1=DB::getLettore();
+    $query=$c1->prepare('select *
+    from utenti u 
+    where u.username = ? ;');   
+    $query->bind_param("s", $dati['username']);
+    $query->execute();  
+    $result=$query->get_result();
+    $r=$result->fetch_assoc();
+    $_SESSION['id'] = $r['id'];
+    $_SESSION['is_admin'] = (bool)$r['is_admin'];
+    $c->close();
     echo json_encode(['status' => 'OK', 'message' => 'Registrazione avvenuta con successo']);
 }
 else{
