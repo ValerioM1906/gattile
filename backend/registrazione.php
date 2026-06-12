@@ -13,8 +13,6 @@ include_once 'common/header.php'
         <input type="text" id="citta" name="citta">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email">
         <label for="password">Password:</label>
         <input type="password" id="password" name="password">
         <label for="password">Conferma password:</label>

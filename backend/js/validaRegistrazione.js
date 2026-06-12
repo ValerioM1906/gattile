@@ -4,7 +4,6 @@ form.addEventListener('submit', event=>{
     var regPassword=/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-\.]).{8,16}$/
     var regUsername=/^[A-Za-z]*[A-Za-z][A-Za-z0-9-. _]*$/
     var regNome=/[a-zA-Z].{1,}/
-    var regMail=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
     var nomeForm=document.getElementById('nome').value
     var cognomeForm=document.getElementById('cognome').value
     var usernameForm=document.getElementById('username').value
@@ -15,7 +14,7 @@ form.addEventListener('submit', event=>{
         regNome.test(nomeForm) &&
         regNome.test(cognomeForm) &&
         regUsername.test(usernameForm) &&
-        form['indirizzo'].value!=""&&
+        form['indirizzo'].value!="" &&
         form['citta'].value!=""
     )){
         console.log('non valido')
